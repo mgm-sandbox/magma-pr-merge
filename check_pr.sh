@@ -1,9 +1,9 @@
 #!/bin/sh
 
-GITHUB_REPO_GIT_URL=git://github.com/mgm-sandbox/magma.git
-GITHUB_PR_SOURCE_REPO_OWNER=mgm-sandbox
+#GITHUB_REPO_GIT_URL=git://github.com/mgm-sandbox/magma.git
+#GITHUB_PR_SOURCE_REPO_OWNER=mgm-sandbox
 REPO=`echo $GITHUB_REPO_GIT_URL | awk -F/ '{print gensub("\\\.git$", "", "g", $NF)}'`
-GITHUB_PR_NUMBER=4
+#GITHUB_PR_NUMBER=4
 
 generate_pr_status_gql() {
 cat<<EOF
