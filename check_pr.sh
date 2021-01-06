@@ -28,8 +28,28 @@ cat<<EOF
   }
 }
 EOF
-} 
+}  
 
-generate_pr_status_gql | gh api graphql -f query="`cat`" 
-gh pr checks $GITHUB_PR_NUMBER -R $GITHUB_PR_SOURCE_REPO_OWNER/$REPO
+generate_pr_status_gql | gh api graphql -f query="`cat`" 2>&1 | tee /tmp/pr_state
+gh pr checks $GITHUB_PR_NUMBER -R $GITHUB_PR_SOURCE_REPO_OWNER/$REPO 2>&1 | tee /tmp/check_state
+
+
+REVIEW_DECISION=`cat /tmp/pr_state | jq -r '.data.repository.pullRequest.reviewDecision'`
+HAVE_READY_LABEL=`cat /tmp/pr_state | jq -r '.data.repository.pullRequest.labels.nodes[] | select(.name == "ready-for-merge").name'`
+
+if [ "x$REVIEW_DECISION" != "xAPPROVED" ]; then 
+  echo "Review decision($REVIEW_DECISION) != APPROVED"
+  exit 0
+fi
+
+if [ "x$HAVE_READY_LABEL" != "xready-for-merge" ]; then
+  echo "No ready-for-merge label"
+  exit 0
+fi
+
+echo "Okay, looks good, let's merge"
+
+gh pr merge $GITHUB_PR_NUMBER -m -R $GITHUB_PR_SOURCE_REPO_OWNER/$REPO 
+
+
 exit 0
