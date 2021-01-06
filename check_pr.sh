@@ -32,3 +32,4 @@ EOF
 
 generate_pr_status_gql | gh api graphql -f query="`cat`" 
 gh pr checks $GITHUB_PR_NUMBER -R $GITHUB_PR_SOURCE_REPO_OWNER/$REPO
+exit 0
