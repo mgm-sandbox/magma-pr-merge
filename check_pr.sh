@@ -73,12 +73,12 @@ if [ $CIRCLE_CI_PASS ]; then
 fi
 
 if [ $JENKINS_CI_PASS ]; then
-  echo "Circle CI not passed"
+  echo "Jenkins CI not passed"
   exit 0
 fi
 
 if [ $INTEGRATION_TEST_PASS ]; then
-  echo "Circle CI not passed"
+  echo "Integration test not passed"
   exit 0
 fi
 
