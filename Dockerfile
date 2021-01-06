@@ -12,5 +12,6 @@ FROM alpine:3.12.3
 RUN apk add --update libc6-compat jq openjdk11-jre
 COPY --from=builder /usr/bin/gh /usr/bin/gh
 COPY --from=builder /usr/bin/jenkins-cli.jar /usr/bin/jenkins-cli.jar
+ADD ./check_pr.sh /usr/bin/check_pr.sh
 #why it not working??
 #ADD https://$JENKINS_URL/jnlpJars/jenkins-cli.jar /usr/bin

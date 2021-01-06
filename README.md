@@ -17,5 +17,3 @@ Authenticated as: jenkins
 Authorities:
   authenticated
 ```
-
-
