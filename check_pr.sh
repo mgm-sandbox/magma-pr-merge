@@ -67,17 +67,17 @@ JENKINS_CI_PASS=$?
 ! grep -r '^continuous-integration/integration-test.*pass.*' /tmp/check_state
 INTEGRATION_TEST_PASS=$?
 
-if [ $CIRCLE_CI_PASS ]; then
+if [ $CIRCLE_CI_PASS -ne 1]; then
   echo "Circle CI not passed"
   exit 0
 fi
 
-if [ $JENKINS_CI_PASS ]; then
+if [ $JENKINS_CI_PASS -ne 1 ]; then
   echo "Jenkins CI not passed"
   exit 0
 fi
 
-if [ $INTEGRATION_TEST_PASS ]; then
+if [ $INTEGRATION_TEST_PASS -ne 1 ]; then
   echo "Integration test not passed"
   exit 0
 fi
